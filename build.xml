@@ -1,6 +1,6 @@
-<project name="irblast" default="dist">
+<project name="irblaster" default="dist">
 	<description>
-		Ant build script for Titanium Android module irblast
+		Ant build script for Titanium Android module irblaster
 	</description>
 
 	<property name="ti.module.root" location="${basedir}"/>

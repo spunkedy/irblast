@@ -6,7 +6,7 @@
  * Please see the LICENSE included with this distribution for details.
  *
  */
-package co.withgod.irblast;
+package co.withgod.irblaster;
 
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -19,34 +19,37 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@Kroll.module(name="Irblast", id="co.withgod.irblast")
-public class IrblastModule extends KrollModule
+@Kroll.module(name="Irblaster", id="co.withgod.irblaster")
+public class IrblasterModule extends KrollModule
 {
 
 	// Standard Debugging variables
 	private static final String TAG = "IrblastModule";
 	
 	@SuppressWarnings("unchecked")
-	private java.lang.reflect.Method sendIR;
+	final private java.lang.reflect.Method sendIR;
 	private Object irService;
 	
 
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 	
-	public IrblastModule(){
+	public IrblasterModule(){
 		super();
-
+		java.lang.reflect.Method toSet;
 		irService = TiApplication.getInstance().getSystemService("irda");
     	irService.getClass();
     	Class irClass = irService.getClass();
     	Class params[] = new Class[1];
     	params[0] = String.class;
+    	
     	try{
-    		sendIR = irClass.getMethod("write_irsend", params);
+    		toSet = irClass.getMethod("write_irsend", params);
     	} catch (Exception e) {
 			e.printStackTrace();
+			toSet = null;
 		}
+    	sendIR = toSet;
 	}
 
 	@Kroll.onAppCreate
@@ -58,13 +61,25 @@ public class IrblastModule extends KrollModule
 
 	// Methods
 	@Kroll.method
-	public void sendCode(String codeToSend){
+	public void sendCode(final String codeToSend){
 	
-		for(int i=0;i<3;i++){
+		Thread thread = new Thread(){
+		    @Override
+		    public void run() {
+				try {
+					sendIR.invoke(irService,hex2dec(codeToSend));
+					sendIR.invoke(irService,hex2dec(codeToSend));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		    }
+		};
+
+		thread.start();
+		for(int i=0;i<2;i++){
 			try {
 				sendIR.invoke(irService,hex2dec(codeToSend));
-				sendIR.invoke(irService,hex2dec(codeToSend));
-				Thread.sleep(10);
+				Thread.sleep(2);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -95,4 +110,3 @@ public class IrblastModule extends KrollModule
 		return irData;
 	}
 }
-

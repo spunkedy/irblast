@@ -6,7 +6,7 @@
  * Please see the LICENSE included with this distribution for details.
  *
  */
-package co.withgod.irblast;
+package co.withgod.irblaster;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
@@ -22,8 +22,8 @@ import org.appcelerator.titanium.view.TiUIView;
 import android.app.Activity;
 
 
-// This proxy can be created by calling Irblast.createExample({message: "hello world"})
-@Kroll.proxy(creatableInModule=IrblastModule.class)
+// This proxy can be created by calling Irblaster.createExample({message: "hello world"})
+@Kroll.proxy(creatableInModule=IrblasterModule.class)
 public class ExampleProxy extends TiViewProxy
 {
 	// Standard Debugging variables
