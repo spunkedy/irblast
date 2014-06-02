@@ -1,16 +1,16 @@
-# irblast Module
+# irblaster Module
 
 ## Description
 
 TODO: Enter your module description here
 
-## Accessing the irblast Module
+## Accessing the irblaster Module
 
 To access this module from JavaScript, you would do the following:
 
-	var irblast = require("co.withgod.irblast");
+	var irblaster = require("co.withgod.irblaster");
 
-The irblast variable is a reference to the Module object.	
+The irblaster variable is a reference to the Module object.	
 
 ## Reference
 
